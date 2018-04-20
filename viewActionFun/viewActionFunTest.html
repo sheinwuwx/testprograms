@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>viewActionFun test</title>
+	<style type="text/css">
+		#menuContainer{
+			position:absolute;
+			left:0px;
+			top:100px;
+			height:520px;
+			width:300px;
+			border:1px solid yellow;
+		}
+		.menuItem{
+			position:absolute;
+			left:5%;
+			top:1%;
+			height:8%;
+			width:90%;
+			border:1px solid black;
+			background:#666;
+		}
+		#topContainer{
+			position:absolute;
+			left:0px;
+			top:0px;
+			height:96px;
+			width:1280px;
+			border:1px solid yellow;
+		}
+		.topItem{
+			position:absolute;
+			left:2%;
+			top:5%;
+			height:90%;
+			width:16%;
+			border:1px solid black;
+			background:#666;
+		}
+		#contentContainer{
+			position:absolute;
+			left:350px;
+			top:100px;
+			height:520px;
+			width:900px;
+			border:1px solid yellow;
+		}
+		.contentItem{
+			position:absolute;
+			border:1px solid black;
+			background:#666;
+		}
+		#bottomContainer{
+			position:absolute;
+			left:0px;
+			top:620px;
+			height:96px;
+			width:1280px;
+			border:1px solid yellow;
+		}
+		.bottomItem{
+			position:absolute;
+			left:1%;
+			top:5%;
+			height:90%;
+			border:1px solid black;
+			background:#666;
+		}
+	</style>
+	<script type="text/javascript" src = "jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src = "viewActionFun.js"></script>
+	<script type="text/javascript" src = "keyevent.js"></script>
+</head>
+<body id = "bodyContainer" bgcolor = "#333" style = "height:720px;width:1280px;" onload = "init();">
+<div id = "topContainer" class = "bodyItem">
+	<div class = "topItem" style = "left:2%"></div>
+	<div class = "topItem" style = "left:22%"></div>
+	<div class = "topItem" style = "left:42%"></div>
+	<div class = "topItem" style = "left:62%"></div>
+	<div class = "topItem" style = "left:82%"></div>
+</div>
+<div id = "menuContainer" class = "bodyItem">
+	<div class = "menuItem" style = "top:1%"></div>
+	<div class = "menuItem" style = "top:11%"></div>
+	<div class = "menuItem" style = "top:21%"></div>
+	<div class = "menuItem" style = "top:31%"></div>
+	<div class = "menuItem" style = "top:41%"></div>
+	<div class = "menuItem" style = "top:51%"></div>
+	<div class = "menuItem" style = "top:61%"></div>
+	<div class = "menuItem" style = "top:71%"></div>
+	<div class = "menuItem" style = "top:81%"></div>
+	<div class = "menuItem" style = "top:91%"></div>
+</div>
+<div id = "contentContainer" class = "bodyItem">
+	<div class = "contentItem" style = "top:1%;left:1%;height:58%;width:28%;"></div>
+	<div class = "contentItem" style = "top:61%;left:1%;height:18%;width:8%;"></div>
+	<div class = "contentItem" style = "top:61%;left:11%;height:18%;width:8%;"></div>
+	<div class = "contentItem" style = "top:61%;left:21%;height:18%;width:8%;"></div>
+	<div class = "contentItem" style = "top:1%;left:31%;height:38%;width:18%;"></div>
+	<div class = "contentItem" style = "top:41%;left:31%;height:38%;width:18%;"></div>
+	<div class = "contentItem" style = "top:1%;left:51%;height:18%;width:18%;"></div>
+	<div class = "contentItem" style = "top:1%;left:71%;height:18%;width:28%;"></div>
+	<div class = "contentItem" style = "top:21%;left:51%;height:38%;width:48%;"></div>
+	<div class = "contentItem" style = "top:61%;left:51%;height:18%;width:18%;"></div>
+	<div class = "contentItem" style = "top:61%;left:71%;height:18%;width:28%;"></div>
+	<div class = "contentItem" style = "top:81%;left:1%;height:18%;width:18%;"></div>
+	<div class = "contentItem" style = "top:81%;left:21%;height:18%;width:18%;"></div>
+	<div class = "contentItem" style = "top:81%;left:41%;height:18%;width:58%;"></div>
+</div>
+<div id = "bottomContainer" class = "bodyItem">
+	<div class = "bottomItem" style = "left:1%;width:8%"></div>
+	<div class = "bottomItem" style = "left:11%;width:8%"></div>
+	<div class = "bottomItem" style = "left:21%;width:8%"></div>
+	<div class = "bottomItem" style = "left:31%;width:8%"></div>
+	<div class = "bottomItem" style = "left:41%;width:8%"></div>
+	<div class = "bottomItem" style = "left:51%;width:18%"></div>
+	<div class = "bottomItem" style = "left:71%;width:8%"></div>
+	<div class = "bottomItem" style = "left:81%;width:8%"></div>
+	<div class = "bottomItem" style = "left:91%;width:8%"></div>
+</div>
+</body>
+<script type="text/javascript">
+	var bodyObj = {};
+	var menuObj = {};
+	var topObj = {};
+	var contentObj = {};
+	var bottomObj = {};
+	var focusArea = 0;//0：顶部菜单  1 左侧菜单 2：中间内容 3：底部菜单 （按照classname获取的顺序来）
+	/*--键值映射--*/
+	initPage(window);
+	function eventHandler(eventObj,_type){
+		var keycode = eventObj.code;
+		iDebug("---[edtv][choose]---eventHandler()---keycode = " + keycode);
+		switch(keycode){
+			case "KEY_UP":
+				if(focusArea == 0){
+					topObj.actionUDLR(-1);
+				}else if(focusArea == 1){
+					menuObj.actionUDLR(-1);
+				}else if(focusArea == 2){
+					contentObj.actionUDLR(-1);
+				}else if(focusArea == 3){
+					bottomObj.actionUDLR(-1);
+				}
+				break;
+			case "KEY_DOWN":
+				if(focusArea == 0){
+					topObj.actionUDLR(1);
+				}else if(focusArea == 1){
+					menuObj.actionUDLR(1);
+				}else if(focusArea == 2){
+					contentObj.actionUDLR(1);
+				}else if(focusArea == 3){
+					bottomObj.actionUDLR(1);
+				}
+				break;
+			case "KEY_LEFT":
+				if(focusArea == 0){
+					topObj.actionUDLR(-2);
+				}else if(focusArea == 1){
+					menuObj.actionUDLR(-2);
+				}else if(focusArea == 2){
+					contentObj.actionUDLR(-2);
+				}else if(focusArea == 3){
+					bottomObj.actionUDLR(-2);
+				}
+				break;
+			case "KEY_RIGHT":
+				if(focusArea == 0){
+					topObj.actionUDLR(2);
+				}else if(focusArea == 1){
+					menuObj.actionUDLR(2);
+				}else if(focusArea == 2){
+					contentObj.actionUDLR(2);
+				}else if(focusArea == 3){
+					bottomObj.actionUDLR(2);
+				}
+				break;
+			case "KEY_EXIT": //退出
+			case "KEY_BACK":
+				break;
+			case "KEY_SELECT": //确定
+				break;
+			case "KEY_HOMEPAGE"://属性键
+				break;
+			case "KEY_MENU": //home键
+				break;
+			default: //其他
+				break;
+		}
+		return eventObj.args.type;
+	}
+ 	function init(){
+ 		bodyObj = new bodyFun();
+ 		menuObj = new menuFun();
+ 		topObj = new topFun();
+ 		contentObj = new contentFun();
+ 		bottomObj = new bottomFun();
+ 		initFocus();
+ 	}
+ 	function initFocus(){
+ 		focusArea = 2;
+ 		switch(focusArea){
+ 			case 0:
+ 				topObj.hasFocus();
+ 				break;
+ 			case 1:
+ 				menuObj.hasFocus();
+ 				break;
+ 			case 2:
+ 				contentObj.hasFocus();
+ 				break;
+ 			case 3:
+ 				bottom.hasFocus();
+ 				break;
+ 		}
+ 	}
+ 	var component = {
+ 		hasFocus:function(_borderObj){
+ 			if(typeof _borderObj != "undefined"){
+ 				var pos = this.viewActionObj.getPosByBorderObj(_borderObj);
+ 				if(typeof pos != "object"){//只是避免意外
+ 					this.pos = pos;
+ 				}
+ 			}
+ 			focusArea = this.focusArea;
+ 			this.focus();
+ 		},
+ 		loseFocus:function(){
+ 			this.blur();
+ 		},
+ 		actionUDLR:function(_type){
+ 			var pos = this.viewActionObj.getPosByAction(_type);
+ 			if(typeof pos == "object"){//边界，边界对象交给顶层
+ 				bodyObj.actionUDLR(pos);
+ 			}else{//内部处理
+ 				this.blur();
+ 				this.pos = pos;
+ 				this.focus();
+ 				this.viewActionObj.refresh({type:0,currPos:pos});
+ 			}
+ 		},
+ 		focus:function(){
+ 			this.container.find("."+this.className+":eq("+this.pos+")").css({"background-color":"black","border-color":"blue"});
+ 		},
+ 		blur:function(){
+ 			this.container.find("."+this.className+":eq("+this.pos+")").css({"background-color":"#666","border-color":"black"});
+ 		},
+ 	}
+ 	function bodyFun(){
+ 		this.container = null;
+ 		this.className = "bodyItem";
+ 		this.viewActionObj = new viewActionFun();
+ 		this.viewActionObj.init("bodyContainer",this.className,{"itemMargin":50,"containerPadding":50,"defaultActionMap":{}});
+ 		this.actionUDLR = function(_borderObj){
+ 			_borderObj.isInside = true;//子组件本来就是基于父组件定位，不用转化
+ 			var pos = this.viewActionObj.getPosByBorderObj(_borderObj);
+ 			if(typeof pos == "object"){//边界，边界对象交给顶层
+
+ 			}else{//内部处理
+ 				//上一个组件失去焦点
+ 				switch(focusArea){
+ 					case 0:
+ 						topObj.loseFocus();
+ 						break;
+ 					case 1:
+ 						menuObj.loseFocus();
+ 						break;
+ 					case 2:
+ 						contentObj.loseFocus();
+ 						break;
+ 					case 3:
+ 						bottomObj.loseFocus();
+ 						break;
+ 				}
+ 				var nextContainerId = $(".bodyItem:eq("+pos+")").attr("id");
+ 				_borderObj.isInside = false;
+ 				switch(nextContainerId){
+ 					case "topContainer":
+ 						topObj.hasFocus(_borderObj);
+ 						break;
+ 					case "menuContainer":
+ 						menuObj.hasFocus(_borderObj);
+ 						break;
+ 					case "contentContainer":
+ 						contentObj.hasFocus(_borderObj);
+ 						break;
+ 					case "bottomContainer":
+ 						bottomObj.hasFocus(_borderObj);
+ 						break;
+ 				}
+ 				this.viewActionObj.refresh(pos);
+ 			}
+ 		}
+ 	}
+ 	function topFun(){
+ 		this.container = $("#topContainer");
+ 		this.className = "topItem";
+ 		this.focusArea = 0;
+ 		this.pos = 0;
+ 		this.viewActionObj = new viewActionFun();
+ 		this.viewActionObj.init("topContainer",this.className,{"itemMargin":100,"containerPadding":50,"defaultActionMap":{}});
+ 	}
+ 	topFun.prototype = component;
+
+ 	function menuFun(){
+ 		this.container = $("#menuContainer");
+ 		this.className = "menuItem";
+ 		this.focusArea = 1;
+ 		this.pos = 0;
+ 		this.viewActionObj = new viewActionFun();
+ 		this.viewActionObj.init("menuContainer",this.className,{"itemMargin":50,"containerPadding":50,"defaultActionMap":{}});
+ 	}
+ 	menuFun.prototype = component;
+ 	
+ 	function contentFun(){
+ 		this.container = $("#contentContainer");
+ 		this.className = "contentItem";
+ 		this.focusArea = 2;
+ 		this.pos = 0;
+ 		this.viewActionObj = new viewActionFun();
+ 		this.viewActionObj.init("contentContainer",this.className,{"itemMargin":50,"containerPadding":50,"defaultActionMap":{}});
+ 	}
+ 	contentFun.prototype = component;
+
+ 	function bottomFun(){
+ 		this.container = $("#bottomContainer");
+ 		this.className = "bottomItem";
+ 		this.focusArea = 3;
+ 		this.pos = 0;
+ 		this.viewActionObj = new viewActionFun();
+ 		this.viewActionObj.init("bottomContainer",this.className,{"itemMargin":50,"containerPadding":50,"defaultActionMap":{}});
+ 	}
+ 	bottomFun.prototype = component;
+</script>
+</html>
