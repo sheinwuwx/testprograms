@@ -1,4 +1,10 @@
 # testprograms
 use to do some test
 add some chance
+<<<<<<< HEAD
 add some chance3
+=======
+add some chance5
+add some chance6
+add some chance7
+>>>>>>> dev
