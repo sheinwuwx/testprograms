@@ -3,8 +3,4 @@ use to do some test
 add some chance
 add some chance5
 add some chance6
-<<<<<<< HEAD
-add some chance7
-=======
-add some chance7
->>>>>>> wuwxdev
+add some chance8
